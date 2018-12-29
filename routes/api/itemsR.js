@@ -25,20 +25,45 @@ router.get('/', (req, res) => {
 //@desc POST item in the DB
 //@access Private
 //@call By retailer
-router.post('/',checkAuth,(req, res) => {
+router.post('/', checkAuth, (req, res) => {
     console.log("inside /api/items --POST");
-    RetailersM.find({
-            retailerName: rname //rname is the retailerName we get from the token
-            //if retailerName is present in RetailersM then that retailer is elegable for storing the data
-            //now we add the data in req.body to Item model
+    console.log(req.body.userData.retailerName)
+    RetailersM.findOne({
+            retailerName: req.body.userData.retailerName
         })
         .exec()
-        .then(user => res.json(user)) //temp
+        .then(user => {
+
+                var item = new Item({
+                    retailerName: req.body.userData.retailerName,
+                    itemName: req.body.itemName,
+                    price: req.body.price,
+                    description: req.body.description,
+                    image: req.body.image
+                });
+                item
+                    .save()
+                    .then(results => {
+                        console.log(results);
+                        //Created because user has been created
+                        res.status(201).json({
+                            message: 'The item has been added'
+                        });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        res.status(500).json({
+                            error: err
+                        });
+                    });
+            }
+
+        )
         .catch(err => {
             console.log(err);
             res.status(500).json({
-                error:err
-                
+                error: err
+
             })
         })
 
