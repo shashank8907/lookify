@@ -12,11 +12,13 @@
     const token = req.headers.authorization.split(" ")[1];
     console.log(token); 
     try {
+
+        //This method can verify if the token is valid or not  
          const decoded = jwt.verify(token, jwtKeyC);
          console.log("This middleware is hit verytime user makes request to a protected route and for this req it has: " +decoded)
          req.body.userData = decoded;
          //In future requests which use this middleware in front of it we could extract the userData
-         next();
+         next();  
      }catch(error){
         return res.status(401).json({
             // message:'Auth failed'
