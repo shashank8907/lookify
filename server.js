@@ -24,10 +24,8 @@ mongoose
 .then(()=>console.log("Mongoo db connected..."))
 .catch(err => console.log(err));
 
-//Use routes
+//Use routes for items 
 app.use('/api/items',items);
-
-
 
 //user route for retailers
 app.use('/api/retailers/',retailers);

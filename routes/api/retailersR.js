@@ -22,17 +22,13 @@ router.post('/reg', (req, res) => {
         })
         .exec()
         .then(user => {
-            //when find() is used if no entry is ther then user is [] not null
             if (user.length >= 1) {
                 //If user exists
                 console.log(user)
-                //409 confilct 422-unprocessable entity
                 return res.status(409).json({
                     message: "retailerusername of already taken, if you are an existing user try logging-in else choose another username"
                 })
             } else {
-                //new user
-                //Add randon strings before we hash our plaintext password
                 bcrypt.hash(req.body.password, 10, function (err, hash) {
                     // Store hash in your password DB.
                     if (err) {
@@ -48,9 +44,6 @@ router.post('/reg', (req, res) => {
                             email: req.body.email,
                             password: hash
                         });
-                        // When the userobject is saved we check the results and send message "success"
-                        //If save failed we catch the error and print the error before sinding 500 error with 
-                        // with a json object --thing to notice
                         retailerObj
                             .save()
                             .then(results => {
@@ -80,40 +73,30 @@ router.post('/reg', (req, res) => {
 
 });
 
-//@route POST api/users/login
-//@desc When registered user wants to login hit this route
-//@access  Public 
+//@route post /api/retailers/login
+//@desc register retailer --get the data from the front and store it in DB
+//@access Private
 router.post('/login', (req, res) => {
-    //Get email and password from here and search in database 
+    //here we get retailerUsername and password from frontend req body  
     RetailersM.findOne({
-            userName: req.body.username
+        retailerName: req.body.retailerName
         })
         .exec()
         .then(user => {
             if (user) {
-                //else the user exists 
-                //Here we check the password that received is same as in DB
-                //After bcrypt we cant reverse it, Then how can we check
-                //WE hash the input with same algorithm and match the result? but what if hacker use dictionary??
+                //If the user exists in the DB check the passworder provided by him/her matches 
+                //How does bcrypt compare work?
                 bcrypt.compare(req.body.password, user.password, function (err, result) {
                     if (err) {
                         console.log(err)
                         return res.status(401).json({
-                            //We can give user not exists but it's not safe
-                            //because hacker can get a list of users that are registerd through bruteforce
-                            // message: "Auth failed"
-                            message:"Auth err"
+                            message:"Password did not match"
                         })
                     }
                     if (result) {
-                        //When the Auth is successful we use jwt
-                        //We use this to maintain session securly
-                        //Payload: What do we want to pass to the client
-                        //SecretOrPrivateKey: an d
-                        //options: obj where we define options of sign() process
-                        //callback: here we get our token
                         const token = jwt.sign({
-                            username:user.userName,
+                            //Data in token are not ment for client to extract
+                            retailerName:user.retailerName,
                             email:user.email,
                             userId:user._id
                         },jwtKeyC,{
@@ -128,7 +111,7 @@ router.post('/login', (req, res) => {
                     //If it doesn't enter any else block
                     res.status(401).json({
                         // message: "Auth failed",
-                        message: "no err no "
+                        message: " At login ERROR"
                     })
 
                 });
