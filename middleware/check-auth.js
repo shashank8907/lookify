@@ -13,6 +13,7 @@
     console.log(token); 
     try {
          const decoded = jwt.verify(token, jwtKeyC);
+         console.log("This middleware is hit verytime user makes request to a protected route and for this req it has: " +decoded)
          req.body.userData = decoded;
          //In future requests which use this middleware in front of it we could extract the userData
          next();

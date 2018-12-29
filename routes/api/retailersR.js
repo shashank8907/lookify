@@ -78,6 +78,7 @@ router.post('/reg', (req, res) => {
 //@access Private
 router.post('/login', (req, res) => {
     //here we get retailerUsername and password from frontend req body  
+    console.log(req.body.retailerName+ "---------@#$-------")
     RetailersM.findOne({
         retailerName: req.body.retailerName
         })
