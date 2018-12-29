@@ -87,9 +87,9 @@ router.delete('/', checkAuth, (req, res) => {
                         itemName: req.body.itemName
 
                     }).exec()
-                    .then(() => {
+                    .then((data) => {
 
-                        YourSchema
+                        Item
                             .remove({
                                 itemName: req.body.itemName
                             })
