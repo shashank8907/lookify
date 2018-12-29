@@ -74,36 +74,46 @@ router.post('/', checkAuth, (req, res) => {
 //@access Private
 //@call By retailer
 router.delete('/', checkAuth, (req, res) => {
-    console.log("inside /api/items --POST");
-    console.log(req.body.userData.retailerName)
+    //Delete one item
+    console.log("inside /api/items --DELETE");
+    console.log(req.body.userData.retailerName);
     RetailersM.findOne({
             retailerName: req.body.userData.retailerName
         })
         .exec()
-        .then(user => {
+        .then(() => {
+                Item.findOne({
+                        retailerName: req.body.userData.retailerName,
+                        itemName: req.body.itemName
 
-                var item = new Item({
-                    retailerName: req.body.userData.retailerName,
-                    itemName: req.body.itemName,
-                    price: req.body.price,
-                    description: req.body.description,
-                    image: req.body.image
-                });
-                item
-                    .save()
-                    .then(results => {
-                        console.log(results);
-                        //Created because user has been created
-                        res.status(201).json({
-                            message: 'The item has been added'
-                        });
-                    })
-                    .catch(err => {
+                    }).exec()
+                    .then(() => {
+
+                        YourSchema
+                            .remove({
+                                itemName: req.body.itemName
+                            })
+                            .exec()
+                            .then(result => {
+                                res.status(200).json({
+                                    message: 'deleted',
+                                })
+                            })
+                            .catch(err => {
+                                res.status(500).json({
+                                    error: err
+                                })
+                            });
+
+
+                    }).catch(err => {
                         console.log(err);
                         res.status(500).json({
+                            message: "Item doesn't exist",
                             error: err
-                        });
-                    });
+
+                        })
+                    })
             }
 
         )
