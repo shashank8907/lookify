@@ -1,10 +1,14 @@
 const express = require('express');
-const multer = require('multer');
 
+const multer = require('multer');
 const upload = multer({dest:'uploads/'});//Execute the multer --can pass config to multer //make uploads to static folder in server.js
 
-
-
+//Trav
+const path = require('path');
+const crypto = require('crypto');//To name the files
+const GridFsStorage = require('multer-gridfs-storage');
+const Grind = require('gridfs-stream');
+const methodOverride = require('method-override');
 
 
 const router = express.Router();
@@ -43,7 +47,6 @@ router.post('/',upload.single('productImage'), checkAuth, (req, res) => {
         })
         .exec()
         .then(user => {
-
                 var item = new Item({
                     retailerName: req.body.userData.retailerName,
                     itemName: req.body.itemName,
