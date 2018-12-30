@@ -1,4 +1,12 @@
 const express = require('express');
+const multer = require('multer');
+
+const upload = multer({dest:'uploads/'});//Execute the multer --can pass config to multer //make uploads to static folder in server.js
+
+
+
+
+
 const router = express.Router();
 const checkAuth = require('../../middleware/check-auth');
 
@@ -25,8 +33,10 @@ router.get('/', (req, res) => {
 //@desc POST item in the DB
 //@access Private
 //@call By retailer
-router.post('/', checkAuth, (req, res) => {
+                    //Will nomy try to parse onefile --name of the field to be parsed
+router.post('/',upload.single('productImage'), checkAuth, (req, res) => {
     console.log("inside /api/items --POST");
+    console.log(req.file);//Req.file is accessable because of upload.single('productImage')
     console.log(req.body.userData.retailerName)
     RetailersM.findOne({
             retailerName: req.body.userData.retailerName
