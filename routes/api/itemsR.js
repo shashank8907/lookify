@@ -88,7 +88,6 @@ router.delete('/', checkAuth, (req, res) => {
 
                     }).exec()
                     .then((data) => {
-
                         Item
                             .remove({
                                 itemName: req.body.itemName
