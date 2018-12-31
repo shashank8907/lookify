@@ -16,7 +16,7 @@ const methodOverride = require('method-override');// Will only use if necessary/
 
 //INIT GFS
 //When our database is open we want to set gfs var to Grid which is our gridfs-stream
-conn.o
+// conn.o
 
 
 //debug mongoose
