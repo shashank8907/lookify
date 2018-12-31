@@ -4,11 +4,11 @@ const multer = require('multer');
 const upload = multer({dest:'uploads/'});//Execute the multer --can pass config to multer //make uploads to static folder in server.js
 
 //Trav
-const path = require('path');
-const crypto = require('crypto');//To name the files
-const GridFsStorage = require('multer-gridfs-storage');
-const Grind = require('gridfs-stream');
-const methodOverride = require('method-override');
+const path = require('path');//DELETE IF NOT USED HERE
+const crypto = require('crypto');//To name the files//DELETE IF NOT USED HERE
+const GridFsStorage = require('multer-gridfs-storage');//DELETE IF NOT USED HERE
+const Grind = require('gridfs-stream');//DELETE IF NOT USED HERE
+const methodOverride = require('method-override');//DELETE IF NOT USED HERE
 
 
 const router = express.Router();

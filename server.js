@@ -5,6 +5,20 @@ const path = require('path');
 const items = require('./routes/api/itemsR');
 const retailers = require('./routes/api/retailersR');
 const app = express();
+
+//Trav
+const path = require('path');//DELETE IF NOT USED HERE
+const crypto = require('crypto');//To name the files//DELETE IF NOT USED HERE
+const GridFsStorage = require('multer-gridfs-storage');//DELETE IF NOT USED HERE
+const Grid = require('gridfs-stream');
+const methodOverride = require('method-override');// Will only use if necessary//DELETE IF NOT USED HERE
+
+
+//INIT GFS
+//When our database is open we want to set gfs var to Grid which is our gridfs-stream
+
+
+
 //debug mongoose
 mongoose.set('debug', true)
 
