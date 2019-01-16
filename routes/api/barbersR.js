@@ -97,6 +97,7 @@ router.post('/login', (req, res) => {
                     if (result) {
                         const token = jwt.sign({
                             //Data in token are not ment for client to extract
+                            key:"barber",
                             barberUsername:user.barberUsername,
                             email:user.email,
                             userId:user._id

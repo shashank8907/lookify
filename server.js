@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 
-const items = require('./routes/api/itemsR');//change Remove or replace wiith appointment 
+const appointment = require('./routes/api/appointmentR');//change Remove or replace wiith appointment 
 const barbers = require('./routes/api/barbersR');//change
 const users =  require('./routes/api/usersR');
 
@@ -43,8 +43,8 @@ mongoose
 .then(()=>console.log("Mongoo db connected..."))
 .catch(err => console.log(err));
 
-//Use routes for items 
-app.use('/api/items',items);
+//Use routes for appointment 
+app.use('/api/appointment',appointment);
 
 //user route for barbers
 app.use('/api/barbers/',barbers);

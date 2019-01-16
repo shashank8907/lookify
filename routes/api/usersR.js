@@ -13,8 +13,6 @@ const jwt = require('jsonwebtoken');
 //Get the jwt key
 const jwtKeyC = require('../../config/keys').jwtKey;
 
-
-
 //@route post /api/retailers/reg
 //@desc register retailer --get the data from the front and store it in DB
 //@access Public
@@ -64,7 +62,6 @@ router.post('/reg', (req, res) => {
                             });
                     }
                 });
-
             }
         })
         .catch(err => {
@@ -100,6 +97,7 @@ router.post('/login', (req, res) => {
                     if (result) {
                         const token = jwt.sign({
                             //Data in token are not ment for client to extract
+                            key:"user",
                             userName:user.userName,
                             email:user.email,
                             userId:user._id
@@ -138,7 +136,6 @@ router.post('/login', (req, res) => {
             });
         })
 });
-
 
 
 //@route POST api/users/delete
