@@ -81,9 +81,9 @@ router.post('/reg', (req, res) => {
 //@access Private
 router.post('/login', (req, res) => {
     //here we get retailerUsername and password from frontend req body  
-    console.log(req.body.barberUsername+ "---------barberUsername @#$-------")
-    BarbersM.findOne({
-        barberUsername: req.body.barberUsername
+    console.log(req.body.userName+ "---------barberUsername @#$-------")
+    UsersM.findOne({
+        userName: req.body.userName
         })
         .exec()
         .then(user => {
@@ -100,7 +100,7 @@ router.post('/login', (req, res) => {
                     if (result) {
                         const token = jwt.sign({
                             //Data in token are not ment for client to extract
-                            barberUsername:user.barberUsername,
+                            userName:user.userName,
                             email:user.email,
                             userId:user._id
                         },jwtKeyC,{
