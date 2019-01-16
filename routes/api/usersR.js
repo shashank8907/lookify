@@ -4,7 +4,10 @@ mongoose.set('debug', true)
 const bcrypt = require('bcrypt');
 const router = express.Router();
 // const ItemM = require('../../models/itemM'); not needed DELETE
-const BarbersM = require('../../models/barbersM');//change
+const BarbersM = require('../../models/barbersM');//change Remove
+//Model for users
+const UsersM = require('../../models/usersM');//change Remove
+
 //Json web token
 const jwt = require('jsonwebtoken');
 //Get the jwt key
@@ -17,8 +20,8 @@ const jwtKeyC = require('../../config/keys').jwtKey;
 //@access Public
 router.post('/reg', (req, res) => {
     //Check if the retaiuler is already in the database first 
-    BarbersM.find({
-        barberUsername: req.body.barberUsername
+    UsersM.find({
+        userName: req.body.userName
         })
         .exec()
         .then(user => {
@@ -38,19 +41,19 @@ router.post('/reg', (req, res) => {
                         });
                     } else {
 
-                        var barbersObj = new BarbersM({
-                            barberUsername: req.body.barberUsername,
+                        var usersObj = new UsersM({
+                            userName: req.body.userName,
                             name:req.body.name,
                             email: req.body.email,
                             password: hash
                         });
-                        barbersObj
+                        usersObj
                             .save()
                             .then(results => {
                                 console.log(results);
                                 //Created because user has been created
                                 res.status(201).json({
-                                    message: 'barber is created successfully  redirect to login page'
+                                    message: 'user is created successfully  redirect to login page'
                                 });
                             })
                             .catch(err => {

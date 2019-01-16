@@ -4,8 +4,9 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 
-const items = require('./routes/api/itemsR');//change
+const items = require('./routes/api/itemsR');//change Remove or replace wiith appointment 
 const barbers = require('./routes/api/barbersR');//change
+const users =  require('./routes/api/usersR');
 
 
 const app = express();
@@ -45,10 +46,12 @@ mongoose
 //Use routes for items 
 app.use('/api/items',items);
 
-//user route for retailers
+//user route for barbers
 app.use('/api/barbers/',barbers);
 
 
+//user route for users
+app.use('/api/users/',users);
 
 
 //Serve static assets(build folder ) if we are in production 
