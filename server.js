@@ -2,8 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
-const items = require('./routes/api/itemsR');
-const retailers = require('./routes/api/retailersR');
+
+
+const items = require('./routes/api/itemsR');//change
+const barbers = require('./routes/api/barbersR');//change
+
+
 const app = express();
 
 //Trav
@@ -42,7 +46,7 @@ mongoose
 app.use('/api/items',items);
 
 //user route for retailers
-app.use('/api/retailers/',retailers);
+app.use('/api/barbers/',barbers);
 
 
 

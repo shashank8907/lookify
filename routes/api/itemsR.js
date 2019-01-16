@@ -17,7 +17,7 @@ const checkAuth = require('../../middleware/check-auth');
 //Item model
 const Item = require('../../models/itemsM');
 //retailers model
-const RetailersM = require('../../models/retailersM');
+const RetailersM = require('../../models/barbersM');
 
 
 //@route GET api/items

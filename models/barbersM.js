@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 //Create schema 
-const retailerSchema = new Schema({
-    retailerName:{
+const barberSchema = new Schema({
+    barberUsername:{
         type:String,
         required:true,
         unique:true
@@ -25,4 +25,4 @@ const retailerSchema = new Schema({
     }
 }); 
 
-module.exports = Retailer = mongoose.model("retailer",retailerSchema)
+module.exports = Barber = mongoose.model("retailer",barberSchema)

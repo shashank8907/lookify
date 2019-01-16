@@ -4,7 +4,7 @@ mongoose.set('debug', true)
 const bcrypt = require('bcrypt');
 const router = express.Router();
 // const ItemM = require('../../models/itemM'); not needed DELETE
-const RetailersM = require('../../models/retailersM');
+const BarbersM = require('../../models/barbersM');//change
 //Json web token
 const jwt = require('jsonwebtoken');
 //Get the jwt key
@@ -17,8 +17,8 @@ const jwtKeyC = require('../../config/keys').jwtKey;
 //@access Public
 router.post('/reg', (req, res) => {
     //Check if the retaiuler is already in the database first 
-    RetailersM.find({
-        retailerName: req.body.retailerUsername
+    BarbersM.find({
+        barberUsername: req.body.barberUsername
         })
         .exec()
         .then(user => {
@@ -26,7 +26,7 @@ router.post('/reg', (req, res) => {
                 //If user exists
                 console.log(user)
                 return res.status(409).json({
-                    message: "retailerusername of already taken, if you are an existing user try logging-in else choose another username"
+                    message: "barberusername of already taken, if you are an existing user try logging-in else choose another username"
                 })
             } else {
                 bcrypt.hash(req.body.password, 10, function (err, hash) {
@@ -38,13 +38,13 @@ router.post('/reg', (req, res) => {
                         });
                     } else {
 
-                        var retailerObj = new RetailersM({
-                            retailerName: req.body.retailerUsername,
+                        var barbersObj = new BarbersM({
+                            barberUsername: req.body.barberUsername,
                             name:req.body.name,
                             email: req.body.email,
                             password: hash
                         });
-                        retailerObj
+                        barbersObj
                             .save()
                             .then(results => {
                                 console.log(results);
@@ -78,9 +78,9 @@ router.post('/reg', (req, res) => {
 //@access Private
 router.post('/login', (req, res) => {
     //here we get retailerUsername and password from frontend req body  
-    console.log(req.body.retailerName+ "---------@#$-------")
-    RetailersM.findOne({
-        retailerName: req.body.retailerName
+    console.log(req.body.barberUsername+ "---------barberUsername @#$-------")
+    BarbersM.findOne({
+        barberUsername: req.body.barberUsername
         })
         .exec()
         .then(user => {
@@ -97,7 +97,7 @@ router.post('/login', (req, res) => {
                     if (result) {
                         const token = jwt.sign({
                             //Data in token are not ment for client to extract
-                            retailerName:user.retailerName,
+                            barberUsername:user.barberUsername,
                             email:user.email,
                             userId:user._id
                         },jwtKeyC,{
@@ -134,9 +134,6 @@ router.post('/login', (req, res) => {
                 error: err
             });
         })
-
-
-
 });
 
 
@@ -146,7 +143,7 @@ router.post('/login', (req, res) => {
 //@access  Private  
 router.delete('/delete/:userId', (req, res, next) => {
     // console.log(req.params.userId);
-    RetailersM.remove({
+    BarbersM.remove({
             _id: req.params.userId
         })
         .exec()
