@@ -31,6 +31,13 @@ const Item = require('../../models/itemsM');
 
 
 
+// by now we know that the user can book an appointment
+
+// we need to add a route such that the after the barber loggsin we all his appointments will be displayed on his homepage --imp here itself
+// we need to add a route such that after the user loggs in we display all his appointments in his homepage -- imp here itself
+// 
+
+
 //@route GET api/items
 //@desc get all items
 //@access Public
@@ -69,8 +76,6 @@ router.post('/', checkAuth, (req, res) => {
 
                 })
             }
-            console.log(barb);
-            console.log("****");
             if (barb) {
                 if (barb.name === req.body.barberName) {
                     var appointment = new AppointmentM({
@@ -111,13 +116,13 @@ router.post('/', checkAuth, (req, res) => {
     }
 });
 
-//@route DELETE api/items
+//@route DELETE api/appointment
 //@desc DELETE item in the DB
 //@access Private
-//@call By retailer
+//@call By barber or user
 router.delete('/', checkAuth, (req, res) => {
     //Delete one item
-    console.log("inside /api/items --DELETE");
+    console.log("inside /api/appointment --DELETE");
     console.log(req.body.userData.retailerName);
     RetailersM.findOne({
             retailerName: req.body.userData.retailerName
